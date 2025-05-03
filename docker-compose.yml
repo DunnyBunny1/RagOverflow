@@ -1,0 +1,18 @@
+services:
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    hostname: frontend
+    # Take the ./frontend/src folder and plug it into the container in folder named /app
+    volumes: ["./frontend/src:/app"]
+    ports:
+      - 8501:8501
+      
+  backend:
+    build: ./backend
+    container_name: backend
+    hostname: backend
+    # Take the ./frontend/src folder and plug it into the container in a folder named /api 
+    volumes: ["./backend/src:/api"]
+    ports:
+      - 5000:5000

@@ -1,0 +1,34 @@
+# Ignore environment variables
+.env
+
+# Ignore virtual environments
+venv/
+
+# Ignore compiled code / interpreter caches
+__pycache__/
+*.pyc
+
+# Ignore output / log files
+*.out
+*.log
+
+# Ignore IDE-specific metadata
+.idea/
+.vs_code/
+
+# Ignore caches for different dev tools
+.ruff_cache/
+.pytest_cache/
+
+# Packaging tool files
+*.egg-info/
+*.egg
+
+# Ignore VCS files
+.git/
+.gitignore
+
+# Ignore Dockerfile and Docker-specific files
+Dockerfile
+docker-compose.yml
+.dockerignore
