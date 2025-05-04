@@ -1,16 +1,26 @@
 # RagOverflow - AI-Powered Programming Assistant
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-%23FE4B4B.svg?style=for-the-badge&logo=streamlit&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)
+
 A Retrieval-Augmented Generation (RAG) system to answer technical programming questions, using LLM-enhanced responses from online forums.
-
-## High-Level Overview
-
-- **Frontend**: Streamlit web UI to handle queries and display responses
-- **Backend**: Flask API that processes queries and interacts with the vector database
 
 ## System Design 
 - TODO: Insert draw.io diagram here 
 
 ## Demo 
 - TODO: Insert demo here 
+
+
+## High-Level Overview 
+
+- **Frontend**: Streamlit web UI to handle queries and display responses
+- **Backend**: Flask API that processes queries and interacts with the vector database
+
+## Features 
+- ***Multi-Container Setup**: Each 
 
 ## Project Organization
 
@@ -60,15 +70,20 @@ HUGGINGFACE_API_KEY=<your_huggingface_api_token>
 
 ### Running with Docker Compose
 
-1. Start all containers:
+- To start all containers:
 
 ```bash
 docker-compose up 
 ```
 
-2. Access the Streamlit frontend at http://localhost:8501 and the Flask backend at http://localhost:5000 
+- Access the Streamlit frontend at http://localhost:8501 and the Flask backend at http://localhost:5000 
 
-3. To stop all containers:
+- Get a interactive terminal ("it") shell into a running container: 
+```bash
+docker exec -it <container-name> /bin/sh
+```
+
+- To stop all containers:
 
 ```bash
 docker-compose down
@@ -79,7 +94,7 @@ docker-compose down
 - TODO: Figure out how we want to do container logs and container config 
     - Also figure out how Flask's logger vs the `logging` module logger will interact 
 - Frontend and backend code is mounted as volumes, so changes will be reflected without rebuilding containers
-- If you update dependencies in requirements.txt, you'll need to rebuild the containers:
+- If you update dependencies in requirements.txt, edit the `docker-compose.yml` file, or edit any Dockerfile's, you'll need to rebuild the containers:
 
 ```bash
 docker-compose up --build

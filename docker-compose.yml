@@ -1,18 +1,43 @@
+# Create 2 services: One for the Flask backend API and 
+# one for the StreamLit frontend UI. Create a bridge network 
+# called bridge-network and add both services to the network so that 
+# the spawned containers are able to communicate
 services:
-  frontend:
-    build: ./frontend
-    container_name: frontend
-    hostname: frontend
-    # Take the ./frontend/src folder and plug it into the container in folder named /app
-    volumes: ["./frontend/src:/app"]
-    ports:
-      - 8501:8501
-      
   backend:
+    # Use the Dockerfile in /backend to build the image
     build: ./backend
-    container_name: backend
-    hostname: backend
-    # Take the ./frontend/src folder and plug it into the container in a folder named /api 
-    volumes: ["./backend/src:/api"]
+    # Explicitly name the container for debugging purposes in Docker desktop
+    container_name: flask-api
+    # Hostname that can be used to address this container in the network
+    hostname: flask-api
+    # Take the ./backend/src folder and plug it into the container in a folder named /backend_code 
+    volumes: ["./backend/src:/backend_code"]
+    # Expose port 5000 on the local host and map it to port 5000 in the container 
     ports:
       - 5000:5000
+    # Connect the container to our bridge network 
+    networks:
+      - bridge-network
+
+  frontend:
+    # Use the Dockerfile in /frontend to build the image
+    build: ./frontend
+    # Explicitly name the container for debugging purposes in Docker desktop
+    container_name: streamlit-UI
+    # Hostname that can be used to address this container in the network
+    hostname: streamlit-UI
+    # Take the ./frontend/src folder and plug it into the container in folder named /frontend_code
+    volumes: ["./frontend/src:/frontend_code"]
+    # Expose port 8501 on the local host and map it to port 8501 in the container 
+    ports:
+      - 8501:8501
+    # Connect the container to our bridge network 
+    networks:
+      - bridge-network
+
+# Create a bridge network that will enable all containers whose services 
+# join the network to be able to communicate using their service
+# names as host names 
+networks:
+  bridge-network:
+    driver: bridge
