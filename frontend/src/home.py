@@ -12,6 +12,7 @@ logger = logging.getLogger(__name__)
 st.write("Hello from StreamLit ;)")
 
 # Send a request to our flask API container
+# TODO: Consider extracting "flask-api:5000" (hostname + port) into constants 
 response : Response  = requests.get(
     "http://flask-api:5000/example"
 )

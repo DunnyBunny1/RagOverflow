@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
 
 app = Flask(__name__)
 
@@ -11,6 +11,17 @@ def example():
     return jsonify({
         "message" : "Welcome to an example page"
     })
+
+@app.route("/health_check")
+def health_check():
+    """
+    Health check to ensure the server is running successfully. Returns the message "OK"
+    with the "200 OK" status code 
+    """
+    return make_response(
+        "OK", 200
+    )
+    
 
 if __name__ == "__main__":
     # Run our app in debug mode (to enable hot reloading)

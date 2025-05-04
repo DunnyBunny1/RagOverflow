@@ -5,6 +5,10 @@ FROM python:3.12-slim
 # volume mount point we defined in the docker-compose file
 WORKDIR /backend_code
 
+# Install dependencies
+# curl is needed for the health check for the Flask server 
+RUN apt-get update && apt-get install -y curl && apt-get clean
+
 # Copy over our requirements file into img's working dir
 # and do not cache  the requirements
 COPY requirements.txt ./

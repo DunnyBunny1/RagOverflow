@@ -1,5 +1,5 @@
-# Create 2 services: One for the Flask backend API and 
-# one for the StreamLit frontend UI. Create a bridge network 
+# Creates 2 services: One for the Flask backend API and 
+# one for the StreamLit frontend UI. Creates a bridge network 
 # called bridge-network and add both services to the network so that 
 # the spawned containers are able to communicate
 services:
@@ -18,6 +18,15 @@ services:
     # Connect the container to our bridge network 
     networks:
       - bridge-network
+    # Perform a health check every 30 sec to ensure our the server is actually running and
+    # can service a simple request to the /health_check endpoint. If unsuccessful, 
+    # docker will mark the container as unhealthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health_check"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
 
   frontend:
     # Use the Dockerfile in /frontend to build the image
@@ -34,6 +43,11 @@ services:
     # Connect the container to our bridge network 
     networks:
       - bridge-network
+    # Only start our frontend container if the backend is healthy and ready to serve requests
+    depends_on:
+        backend:
+          condition: service_healthy
+    
 
 # Create a bridge network that will enable all containers whose services 
 # join the network to be able to communicate using their service
